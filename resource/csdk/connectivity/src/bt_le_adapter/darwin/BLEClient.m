@@ -96,10 +96,11 @@ typedef enum : NSUInteger {
     NSUUID* uuid = [[NSUUID alloc] initWithUUIDString:[[NSString alloc] initWithUTF8String:remoteAddress]];
 
     OICPeripheral* p = _foundPeripherals[uuid];
-    OIC_LOG_V(DEBUG, TAG, "TEST");
+    const char* iden = [[p.identifier UUIDString] UTF8String];
+    OIC_LOG_V(DEBUG, TAG, "identifier: %s", iden);
     for(OICPeripheral* ph in _foundPeripherals) {
         const char* address = [ph.address UTF8String];
-        OIC_LOG_V(INFO, TAG, "BRIAN: %s", address);
+        //OIC_LOG_V(INFO, TAG, "BRIAN: %s", address);
     }
     if(p == nil) {
         OIC_LOG_V(WARNING, TAG, "%s: failed to find device with address=%s", __FUNCTION__, remoteAddress);
