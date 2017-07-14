@@ -96,7 +96,6 @@ typedef enum : NSUInteger {
     NSUUID* uuid = [[NSUUID alloc] initWithUUIDString:[[NSString alloc] initWithUTF8String:remoteAddress]];
 
     OICPeripheral* p = _foundPeripherals[uuid];
-    OIC_LOG_V(DEBUG, TAG, "identifier: %s", iden);
     for(NSUUID* uuid2 in _foundPeripherals) {
         OICPeripheral* ph = _foundPeripherals[uuid2];
         const char* address = [ph.address UTF8String];
