@@ -792,6 +792,7 @@ CAResult_t CALEClientSendUnicastMessageImpl(const char* address, const uint8_t* 
     }
 
     // start LE Scan again
+    /*
     ret = CALEClientStartScan();
     if (CA_STATUS_OK != ret)
     {
@@ -799,7 +800,7 @@ CAResult_t CALEClientSendUnicastMessageImpl(const char* address, const uint8_t* 
         ca_mutex_unlock(g_threadSendMutex);
         return ret;
     }
-
+    */
     ca_mutex_unlock(g_threadSendMutex);
     OIC_LOG(INFO, TAG, "unicast - send logic has finished");
     if (CALEClientIsValidState(address, CA_LE_SEND_STATE,
@@ -914,23 +915,6 @@ CAResult_t CALEClientSendMulticastMessageImpl(JNIEnv *env, const uint8_t* data,
         {
             OIC_LOG(ERROR, TAG, "BT device - send has failed");
         }
-/*
-        jstring jni_address = CALEGetAddressFromBTDevice(env, jarrayObj);
-        if (!jni_address)
-        {
-            OIC_LOG(ERROR, TAG, "CALEGetAddressFromBTDevice has failed");
-            continue;
-        }
-
-        const char* address = (*env)->GetStringUTFChars(env, jni_address, NULL);
-        if (!address)
-        {
-            OIC_LOG(ERROR, TAG, "address is not available");
-            continue;
-        }
-
-        (*env)->ReleaseStringUTFChars(env, jni_address, address);
-        */
     }
 
     OIC_LOG(DEBUG, TAG, "connection routine is finished for multicast");

@@ -96,6 +96,11 @@ typedef enum : NSUInteger {
     NSUUID* uuid = [[NSUUID alloc] initWithUUIDString:[[NSString alloc] initWithUTF8String:remoteAddress]];
 
     OICPeripheral* p = _foundPeripherals[uuid];
+    OIC_LOG_V(DEBUG, TAG, "TEST");
+    for(OICPeripheral* ph in _foundPeripherals) {
+        const char* address = [ph.address UTF8String];
+        OIC_LOG_V(INFO, TAG, "BRIAN: %s", ph.address);
+    }
     if(p == nil) {
         OIC_LOG_V(WARNING, TAG, "%s: failed to find device with address=%s", __FUNCTION__, remoteAddress);
     } else {
@@ -121,6 +126,7 @@ typedef enum : NSUInteger {
     NSUUID* uuid = [[NSUUID alloc] initWithUUIDString:[[NSString alloc] initWithUTF8String:remoteAddress]];
 
     OICPeripheral* p = _foundPeripherals[uuid];
+
     if (p == nil) {
         OIC_LOG_V(WARNING, TAG, "asking for MTU of nonexisting partner %s",
           remoteAddress);
