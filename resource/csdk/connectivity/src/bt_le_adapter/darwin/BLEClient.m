@@ -186,6 +186,9 @@ typedef enum : NSUInteger {
     OIC_LOG_V(INFO, TAG, "%s: trying to connect to peripheral %s", __FUNCTION__, [deviceName UTF8String]);
 
     OICPeripheral* p = [[OICPeripheral alloc] initWithPeripheral:peripheral];
+    const char* address = [[p.peripheral.identifier UUIDString] UTF8String];
+    OIC_LOG_V(INFO, TAG, "%s: adding peripheral %s to foundPeripherals and peripheralList", 
+            __FUNCTION__, address);
     _foundPeripherals[p.peripheral.identifier] = p;
 
     //NOTE: we must keep a reference to the peripheral object otherwise it will disappear and the connect will fail silently
