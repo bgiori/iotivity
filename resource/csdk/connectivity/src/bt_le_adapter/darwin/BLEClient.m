@@ -95,11 +95,13 @@ typedef enum : NSUInteger {
     //create a uuid as the key to lookup the device
     NSUUID* uuid = [[NSUUID alloc] initWithUUIDString:[[NSString alloc] initWithUTF8String:remoteAddress]];
 
+    OIC_LOG_V(INFO, TAG, "%s: foundPeripherals: %s", __FUNCTION__);
     OICPeripheral* p = _foundPeripherals[uuid];
+    int i = 0;
     for(NSUUID* uuid2 in _foundPeripherals) {
         OICPeripheral* ph = _foundPeripherals[uuid2];
         const char* address = [ph.address UTF8String];
-        OIC_LOG_V(INFO, TAG, "BRIAN: %s", address);
+        OIC_LOG_V(INFO, TAG, "%s: \t %d: %s", __FUNCTION__, i, address);
     }
     if(p == nil) {
         OIC_LOG_V(WARNING, TAG, "%s: failed to find device with address=%s", __FUNCTION__, remoteAddress);
@@ -186,9 +188,10 @@ typedef enum : NSUInteger {
     OIC_LOG_V(INFO, TAG, "%s: trying to connect to peripheral %s", __FUNCTION__, [deviceName UTF8String]);
 
     OICPeripheral* p = [[OICPeripheral alloc] initWithPeripheral:peripheral];
+
     const char* address = [[p.peripheral.identifier UUIDString] UTF8String];
-    OIC_LOG_V(INFO, TAG, "%s: adding peripheral %s to foundPeripherals and peripheralList", 
-            __FUNCTION__, address);
+    OIC_LOG_V(INFO, TAG, "%s: adding peripheral %s to foundPeripherals and peripheralList", __FUNCTION__, address);
+    
     _foundPeripherals[p.peripheral.identifier] = p;
 
     //NOTE: we must keep a reference to the peripheral object otherwise it will disappear and the connect will fail silently
@@ -198,7 +201,7 @@ typedef enum : NSUInteger {
     [p setDataReceivedCallback:_dataReceivedCallback];
 
     //initiate connection
-    [_centralManager connectPeripheral:peripheral options:nil];
+    //[_centralManager connectPeripheral:peripheral options:nil];
 }
 
 - (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral {
