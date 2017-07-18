@@ -108,7 +108,7 @@ typedef enum : NSUInteger {
         OIC_LOG_V(WARNING, TAG, "%s: failed to find device with address=%s", __FUNCTION__, remoteAddress);
     } else {
         OIC_LOG_V(INFO, TAG, "%s: connecting to device %s", __FUNCTION__, remoteAddress);
-        [_centralManager connectPeripheral:peripheral options:nil];
+        [_centralManager connectPeripheral:p options:nil];
         OIC_LOG_V(INFO, TAG, "%s: sending data to %s", __FUNCTION__, remoteAddress);
         [p sendMessage:data dataSize:dataLength];
     }
