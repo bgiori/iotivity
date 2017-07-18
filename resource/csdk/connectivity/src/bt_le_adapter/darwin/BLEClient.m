@@ -95,17 +95,20 @@ typedef enum : NSUInteger {
     //create a uuid as the key to lookup the device
     NSUUID* uuid = [[NSUUID alloc] initWithUUIDString:[[NSString alloc] initWithUTF8String:remoteAddress]];
 
-    OIC_LOG_V(INFO, TAG, "%s: foundPeripherals: %s", __FUNCTION__);
+    OIC_LOG_V(INFO, TAG, "%s: foundPeripherals:", __FUNCTION__);
     OICPeripheral* p = _foundPeripherals[uuid];
     int i = 0;
     for(NSUUID* uuid2 in _foundPeripherals) {
         OICPeripheral* ph = _foundPeripherals[uuid2];
         const char* address = [ph.address UTF8String];
         OIC_LOG_V(INFO, TAG, "%s: \t %d: %s", __FUNCTION__, i, address);
+        i = i + 1;
     }
     if(p == nil) {
         OIC_LOG_V(WARNING, TAG, "%s: failed to find device with address=%s", __FUNCTION__, remoteAddress);
     } else {
+        OIC_LOG_V(INFO, TAG, "%s: connecting to device %s", __FUNCTION__, remoteAddress);
+        [_centralManager connectPeripheral:peripheral options:nil];
         OIC_LOG_V(INFO, TAG, "%s: sending data to %s", __FUNCTION__, remoteAddress);
         [p sendMessage:data dataSize:dataLength];
     }
@@ -185,7 +188,7 @@ typedef enum : NSUInteger {
 
     //TODO: remove autoconnection logic (move to ?)
 
-    OIC_LOG_V(INFO, TAG, "%s: trying to connect to peripheral %s", __FUNCTION__, [deviceName UTF8String]);
+    //OIC_LOG_V(INFO, TAG, "%s: trying to connect to peripheral %s", __FUNCTION__, [deviceName UTF8String]);
 
     OICPeripheral* p = [[OICPeripheral alloc] initWithPeripheral:peripheral];
 
