@@ -109,6 +109,9 @@ typedef enum : NSUInteger {
     } else {
         OIC_LOG_V(INFO, TAG, "%s: connecting to device %s", __FUNCTION__, remoteAddress);
         [_centralManager connectPeripheral:p.peripheral options:nil];
+        while(p.state != OICDeviceStateReady) {
+            [NSThread sleepForTimeInterval:0.5f];
+        }
         OIC_LOG_V(INFO, TAG, "%s: sending data to %s", __FUNCTION__, remoteAddress);
         [p sendMessage:data dataSize:dataLength];
     }
